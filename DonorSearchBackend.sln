@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonorSearchBackend", "DonorSearchBackend\DonorSearchBackend.csproj", "{CCA7A134-16EC-4955-98AA-87247254D07B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCA7A134-16EC-4955-98AA-87247254D07B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCA7A134-16EC-4955-98AA-87247254D07B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCA7A134-16EC-4955-98AA-87247254D07B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCA7A134-16EC-4955-98AA-87247254D07B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69053FC9-1F0E-410C-A673-D1B93E488789}
+	EndGlobalSection
+EndGlobal
