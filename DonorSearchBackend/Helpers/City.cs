@@ -22,7 +22,7 @@ namespace DonorSearchBackend.Helpers
 
         private static async Task<string> GetCityByTitleTask(string cityTitle)
         {
-
+            var accessKey2 = ConfigurationManager.AppSetting["AppSettings:DonorSearchApiKey"];
            var accessKey = AppSettings.ApiKey;
 
             var graphQlClient = new GraphQLClient("https://developer.donorsearch.org/graph_ql_test/main_test?access_key=" + accessKey);
