@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DonorSearchBackend.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class StationsController : Controller
     {
         //GET /api/stations/{vk id}
