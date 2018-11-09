@@ -7,23 +7,17 @@ using GraphQL.Client;
 using GraphQL.Common.Request;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Protocols;
 using Newtonsoft.Json;
 
 namespace DonorSearchBackend.Helpers
 {
     public class City
     {
-        //protected static IOptions<AppSettings> _AppSettings;
-
-        //public City(IOptions<AppSettings> AppSettings)
-        //{
-        //    _AppSettings = AppSettings;
-        //}
-
         private static async Task<string> GetCityByTitleTask(string cityTitle)
         {
 
-           var accessKey = AppSettings.ApiKey;
+           var accessKey = ConfigurationManager<>
 
             var graphQlClient = new GraphQLClient("https://developer.donorsearch.org/graph_ql_test/main_test?access_key=" + accessKey);
 
