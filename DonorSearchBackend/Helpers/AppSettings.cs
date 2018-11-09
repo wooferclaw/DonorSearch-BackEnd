@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace DonorSearchBackend.Helpers
 {
-    public class AppSettings
+    public static class AppSettings
     {
-        public string ApiKey { get; set; }
+        public static string ApiKey { get; set; }
     }
 }

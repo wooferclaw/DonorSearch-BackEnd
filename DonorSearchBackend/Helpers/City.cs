@@ -13,17 +13,17 @@ namespace DonorSearchBackend.Helpers
 {
     public class City
     {
-        protected static IOptions<AppSettings> _AppSettings;
+        //protected static IOptions<AppSettings> _AppSettings;
 
-        public City(IOptions<AppSettings> AppSettings)
-        {
-            _AppSettings = AppSettings;
-        }
+        //public City(IOptions<AppSettings> AppSettings)
+        //{
+        //    _AppSettings = AppSettings;
+        //}
 
         private static async Task<string> GetCityByTitleTask(string cityTitle)
         {
 
-           var accessKey = _AppSettings.Value.ApiKey;
+           var accessKey = AppSettings.ApiKey;
 
             var graphQlClient = new GraphQLClient("https://developer.donorsearch.org/graph_ql_test/main_test?access_key=" + accessKey);
 
