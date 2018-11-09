@@ -1,0 +1,33 @@
+﻿-- Table: public."Donations"
+
+-- DROP TABLE public."Donations";
+
+CREATE TABLE public."Donations"
+(
+    "Id" integer NOT NULL DEFAULT nextval('"Donations_Id_seq"'::regclass),
+    "VkId" integer NOT NULL,
+    "DonationTimestamp" timestamp without time zone NOT NULL,
+    "StationId" integer NOT NULL,
+    "StatusId" integer NOT NULL,
+    "DonationType" integer NOT NULL,
+    "DonationId" integer NOT NULL,
+    "Succeed" boolean NOT NULL,
+    "RecomendationTimestamp" timestamp without time zone NOT NULL,
+    CONSTRAINT "PK_Donations" PRIMARY KEY ("Id")
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Donations"
+    OWNER to postgres;
+
+-- Index: IX_Donations_Id
+
+-- DROP INDEX public."IX_Donations_Id";
+
+CREATE UNIQUE INDEX "IX_Donations_Id"
+    ON public."Donations" USING btree
+    ("Id")
+    TABLESPACE pg_default;

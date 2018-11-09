@@ -1,0 +1,35 @@
+﻿-- Table: public."Users"
+
+-- DROP TABLE public."Users";
+
+CREATE TABLE public."Users"
+(
+    "VkId" integer NOT NULL DEFAULT nextval('"Users_VkId_seq"'::regclass),
+    "DSId" integer NOT NULL,
+    CONSTRAINT "PK_Users" PRIMARY KEY ("VkId")
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Users"
+    OWNER to postgres;
+
+-- Index: IX_Users_DSId
+
+-- DROP INDEX public."IX_Users_DSId";
+
+CREATE UNIQUE INDEX "IX_Users_DSId"
+    ON public."Users" USING btree
+    ("DSId")
+    TABLESPACE pg_default;
+
+-- Index: IX_Users_VkId
+
+-- DROP INDEX public."IX_Users_VkId";
+
+CREATE UNIQUE INDEX "IX_Users_VkId"
+    ON public."Users" USING btree
+    ("VkId")
+    TABLESPACE pg_default;
