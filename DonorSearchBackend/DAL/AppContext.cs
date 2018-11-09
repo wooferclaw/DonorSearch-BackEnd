@@ -13,7 +13,8 @@ namespace DonorSearchBackend.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Donorsearch;Username=postgres;Password=postgres");
+            var ConnectionString = ConfigurationManager.AppSetting["AppSettings:DbConnectionString"]; 
+            optionsBuilder.UseNpgsql(ConnectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
