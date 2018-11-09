@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DonorSearchBackend.Helpers;
+using GraphQL.Client;
+using GraphQL.Common.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DonorSearchBackend.Controllers
@@ -10,11 +13,16 @@ namespace DonorSearchBackend.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        //GET /api/users/{vk id}? login = &lt; login&gt;&amp;password=&lt;password&gt;
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        /// <summary>
+        /// Get user by vk id
+        /// </summary>
+        /// <param name="vkId">vk Id</param>
+        /// <returns>info about user in JSON</returns>
+        //GET /api/users/{vk_id}
+        [HttpGet("{vkId}")]
+        public async Task<ActionResult> Get(int vkId)
         {
-            return new string[] { "value1", "value2" };
+            return Content(await UserApi.GetUserByVKId(vkId));
         }
 
         // POST /api/users/{vk id}
