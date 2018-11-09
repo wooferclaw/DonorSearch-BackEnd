@@ -15,17 +15,5 @@ namespace DonorSearchBackend.Controllers
         {
             return new string[] { "value1", "value2" };
         }
-
-        //POST /api/donations/{vk id}
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        //POST /api/donations/{vk id}?{donation id}?{type}
-        [HttpPost]
-        public void Post([FromBody] int value)
-        {
-        }
     }
 }
