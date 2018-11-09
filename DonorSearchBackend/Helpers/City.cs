@@ -12,18 +12,31 @@ using Newtonsoft.Json;
 
 namespace DonorSearchBackend.Helpers
 {
+    public class Country
+    {
+        public string id { get; set; }
+        public string title { get; set; }
+    }
+
     public class City
     {
+        public string id { get; set; }
+        public string title { get; set; }
+        public string area { get; set; }
+        public object region { get; set; }
+        public Country country { get; set; }
+
         private static async Task<string> GetCityByTitleTask(string cityTitle)
         {
-            var accessKey = ConfigurationManager.AppSetting["AppSettings:DonorSearchApiKey"];
+            var apiKey = ConfigurationManager.AppSetting["AppSettings:DonorSearchApiKey"];
+            var apiPath = ConfigurationManager.AppSetting["AppSettings:DonorSearchApiPath"];
+            string citiesJson;
 
-            var graphQlClient = new GraphQLClient("https://developer.donorsearch.org/graph_ql_test/main_test?access_key=" + accessKey);
-
-            var cityRequest = new GraphQLRequest
+            using (var graphQlClient = new GraphQLClient(apiPath + apiKey))
             {
-                
-                Query = @"query cities($title: String)
+                var cityRequest = new GraphQLRequest
+                {
+                    Query = @"query cities($title: String)
                                 {
                                     cities(title: $title)
                                     { 
@@ -37,16 +50,16 @@ namespace DonorSearchBackend.Helpers
                                         }
                                     }
                                 }",
-                OperationName = "cities",
-                Variables = new
-                {
-                    title = cityTitle
-                }
-            };
-            var graphQlResponse = await graphQlClient.PostAsync(cityRequest);
-            var cities = graphQlResponse.GetDataFieldAs<List<City>>("cities");
-            var citiesJson = JsonConvert.SerializeObject(cities);
-
+                    OperationName = "cities",
+                    Variables = new
+                    {
+                        title = cityTitle
+                    }
+                };
+                var graphQlResponse = await graphQlClient.PostAsync(cityRequest);
+                var cities = graphQlResponse.GetDataFieldAs<List<City>>("cities");
+                citiesJson = JsonConvert.SerializeObject(cities);
+            }
             return citiesJson;
         }
 
