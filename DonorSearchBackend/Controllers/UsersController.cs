@@ -10,14 +10,12 @@ namespace DonorSearchBackend.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-
         //GET /api/users/{vk id}? login = &lt; login&gt;&amp;password=&lt;password&gt;
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };
         }
-
 
         // POST /api/users/{vk id}
         [HttpPost]
