@@ -12,22 +12,22 @@ namespace DonorSearchBackend.Controllers
     public class DonationsController : Controller
     {
         //GET /api/donations/{vk id}
-        [HttpGet]
+        [HttpGet("getDonationsByVkId")]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
         // POST /api/donations/{vk id}?{donation id}?{type}
-        [HttpPost]
+        [HttpPost("updateDonationsByVkIdDonationIdAndType")]
         public void Post([FromBody] string value)
         {
 
         }
 
         // POST /api/donations/{vk id}
-        [HttpPost]
-        public void Post([FromBody] int value)
+        [HttpPost("updateDonationsByVkId")]
+        public void Post([FromBody] int value1, int value2)
         {
 
         }
