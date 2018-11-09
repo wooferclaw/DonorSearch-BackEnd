@@ -1,10 +1,12 @@
 ﻿
 using System.Threading.Tasks;
 using DonorSearchBackend.Helpers;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DonorSearchBackend.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [ApiController]
     public class CitiesController : Controller
