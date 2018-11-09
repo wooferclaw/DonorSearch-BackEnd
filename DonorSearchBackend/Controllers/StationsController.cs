@@ -12,7 +12,7 @@ namespace DonorSearchBackend.Controllers
     public class StationsController : Controller
     {
         //GET /api/stations/{vk id}
-        [HttpGet]
+        [HttpGet("getStationsByUserId")]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };

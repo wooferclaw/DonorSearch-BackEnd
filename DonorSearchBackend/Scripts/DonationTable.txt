@@ -10,9 +10,9 @@ CREATE TABLE public."Donations"
     "StationId" integer NOT NULL,
     "StatusId" integer NOT NULL,
     "DonationType" integer NOT NULL,
-    "DonationId" integer NOT NULL,
-    "Succeed" boolean NOT NULL,
-    "RecomendationTimestamp" timestamp without time zone NOT NULL,
+    "DonationId" integer,
+    "Succeed" boolean,
+    "RecomendationTimestamp" timestamp without time zone,
     CONSTRAINT "PK_Donations" PRIMARY KEY ("Id")
 )
 WITH (

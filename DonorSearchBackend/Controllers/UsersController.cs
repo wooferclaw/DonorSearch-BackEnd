@@ -26,9 +26,10 @@ namespace DonorSearchBackend.Controllers
         }
 
         // POST /api/users/{vk id}
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("getUsersByVkId")]
+        public void Post([FromBody] string value, int value2)
         {
+
         }
 
     }
