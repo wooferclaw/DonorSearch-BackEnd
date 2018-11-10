@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DonorSearchBackend.Helpers;
 using GraphQL.Client;
 using GraphQL.Common.Request;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
@@ -20,6 +21,7 @@ namespace DonorSearchBackend.Controllers
         /// <param name="vkId">vk Id</param>
         /// <returns>info about user in JSON</returns>
         //GET /api/users/{vk_id}
+        [EnableCors("AllowAll")]
         [HttpGet("{vkId}")]
         public async Task<ActionResult> Get(int vkId)
         {

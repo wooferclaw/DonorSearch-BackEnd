@@ -12,10 +12,16 @@ namespace DonorSearchBackend.Controllers
     public class StationsController : Controller
     {
         //GET /api/stations/{vk id}
-        [HttpGet("getStationsByUserId")]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //[HttpGet("getStationsByVkId")]
+        //public async Task<ActionResult> getDonorSearchCiByCoordinates(double lat, double lon)
+        //{
+        //    //Content(await ...City.GetCityByCoordinatesTask(lat, lon));
+        //   // return 
+        //}
+
+        //private ActionResult<string> Get(double lat, double lon)
+        //{
+        //    return getDonorSearchCityBoordinates(lat, lon).Result;
+        //}
     }
 }

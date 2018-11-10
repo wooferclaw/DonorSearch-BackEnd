@@ -1,10 +1,12 @@
 ﻿
 using System.Threading.Tasks;
 using DonorSearchBackend.Helpers;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DonorSearchBackend.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [ApiController]
     public class CitiesController : Controller
@@ -13,8 +15,8 @@ namespace DonorSearchBackend.Controllers
         /// <summary>
         /// Get correct city name list from DonorSearch database
         /// </summary>
-        /// <param name="lat"></param>
-        /// <param name="lon"></param>
+        /// <param name="lat">Latitude</param>
+        /// <param name="lon">Longitude</param>
         /// <returns>City list from DonorSearch database by coordinates</returns>
 
         [HttpGet("getDonorSearchCityByCoordinates")]
