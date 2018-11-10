@@ -47,7 +47,7 @@ namespace DonorSearchBackend.Helpers
         public int column { get; set; }
     }
 
-    public class Error
+    public class ErrorResult
     {
         public string message { get; set; }
         public List<Location> locations { get; set; }
@@ -63,7 +63,7 @@ namespace DonorSearchBackend.Helpers
         public City city { get; set; }
         public int created_at { get; set; }
         public string email { get; set; }
-        public List<Error> errors { get; set; }
+        public List<ErrorResult> errors { get; set; }
         public string fax { get; set; }
         public string id { get; set; }
         public double lat { get; set; }
