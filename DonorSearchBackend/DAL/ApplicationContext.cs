@@ -19,15 +19,15 @@ namespace DonorSearchBackend.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-         .HasIndex(u => u.VkId)
+         .HasIndex(u => u.vk_id)
          .IsUnique();
 
             modelBuilder.Entity<User>()
-            .HasIndex(u => u.DSId)
+            .HasIndex(u => u.ds_id)
             .IsUnique();
 
             modelBuilder.Entity<Donation>()
-            .HasIndex(u => u.Id)
+            .HasIndex(u => u.id)
             .IsUnique();
         }
     }

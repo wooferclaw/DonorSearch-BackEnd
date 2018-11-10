@@ -10,11 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20181109194152_Initial.cs" />
-    <Compile Remove="Migrations\20181109194152_Initial.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
