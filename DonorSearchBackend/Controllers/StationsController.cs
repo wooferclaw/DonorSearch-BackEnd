@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using DonorSearchBackend.Helpers;
+using DonorSearchBackend.Helpers.DSApi;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DonorSearchBackend.Controllers
@@ -18,7 +18,7 @@ namespace DonorSearchBackend.Controllers
         [HttpGet("{vkId}")]
         public async Task<ActionResult> Get(int vkId)
         {
-              return Content(await BloodStation.GetBloodStationsByVkIdTask(vkId));
+              return Content(await DSBloodStation.GetBloodStationsByVkIdTask(vkId));
         }
     }
 }
