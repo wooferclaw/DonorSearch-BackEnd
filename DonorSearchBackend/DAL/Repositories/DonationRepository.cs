@@ -5,24 +5,24 @@ using System.Threading.Tasks;
 
 namespace DonorSearchBackend.DAL.Repositories
 {
-    public static class UserRepository
+    public class DonationRepository
     {
-        public static User GetUserByVkId(int vkId)
+        public static List<Donation> GetDonationByVkId(int vkId)
         {
-            User user = null;
+            List<Donation> donationsList = null;
             using (ApplicationContext db = new ApplicationContext())
             {
-                user = db.Users.FirstOrDefault(u => u.vk_id == vkId);
+                donationsList = db.Donations.Where(u => u.vk_id == vkId).ToList();
             }
-            return user;
+            return donationsList;
         }
 
         //TODO: error?
-        public static void AddOrUpdateUser(User user)
+        public static void AddOrUpdateDonation(Donation donation)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                db.Users.AddOrUpdate(user);
+                db.Donations.AddOrUpdate(donation);
                 db.SaveChanges();
             }
         }

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DonorSearchBackend.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20181109235814_Initial")]
-    partial class Initial
+    [Migration("20181110114127_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,7 +52,7 @@ namespace DonorSearchBackend.Migrations
 
             modelBuilder.Entity("DonorSearchBackend.DAL.User", b =>
                 {
-                    b.Property<int?>("vk_id")
+                    b.Property<int>("vk_id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("about_self");
@@ -61,7 +61,7 @@ namespace DonorSearchBackend.Migrations
 
                     b.Property<int>("blood_class_ids");
 
-                    b.Property<int?>("blood_type_id");
+                    b.Property<string>("blood_type");
 
                     b.Property<bool?>("bone_marrow");
 
