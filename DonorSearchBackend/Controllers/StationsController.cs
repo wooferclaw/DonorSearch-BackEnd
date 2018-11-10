@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DonorSearchBackend.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,17 +12,22 @@ namespace DonorSearchBackend.Controllers
     [ApiController]
     public class StationsController : Controller
     {
+        /// <summary>
+        /// Get all blood stations by user vk id (and his current city id)
+        /// </summary>
+        /// <param name="vkId">vkontakte vk id</param>
+        /// <returns></returns>
+        
         //GET /api/stations/{vk id}
-        //[HttpGet("getStationsByVkId")]
-        //public async Task<ActionResult> getDonorSearchCiByCoordinates(double lat, double lon)
-        //{
-        //    //Content(await ...City.GetCityByCoordinatesTask(lat, lon));
-        //   // return 
-        //}
+        [HttpGet("getStationsByVkId")]
+        public async Task<ActionResult> getStationsByVkId(int vkId)
+        {
+              return Content(await BloodStation.GetBloodStationsByVkIdTask(vkId));
+        }
 
-        //private ActionResult<string> Get(double lat, double lon)
-        //{
-        //    return getDonorSearchCityBoordinates(lat, lon).Result;
-        //}
+        private ActionResult<string> Get(int vkId)
+        {
+            return getStationsByVkId(vkId).Result;
+        }
     }
 }
