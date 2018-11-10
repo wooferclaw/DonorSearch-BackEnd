@@ -26,7 +26,7 @@ namespace DonorSearchBackend.Helpers
         public object region { get; set; }
         public Country country { get; set; }
 
-        private static async Task<string> GetCityByTitleTask(string cityTitle)
+        public static async Task<string> GetCityByTitleTask(string cityTitle)
         {
             var apiKey = ConfigurationManager.AppSetting["AppSettings:DonorSearchApiKey"];
             var apiPath = ConfigurationManager.AppSetting["AppSettings:DonorSearchApiPath"];

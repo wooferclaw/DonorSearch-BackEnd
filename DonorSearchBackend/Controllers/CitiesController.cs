@@ -11,25 +11,24 @@ namespace DonorSearchBackend.Controllers
     [ApiController]
     public class CitiesController : Controller
     {
-        //GET /api/Cities/getDonorSearchCityByCoordinates
+        //GET /api/Cities?lat=<lat>&long=<long>
         /// <summary>
         /// Get correct city name list from DonorSearch database
         /// </summary>
         /// <param name="lat">Latitude</param>
         /// <param name="lon">Longitude</param>
         /// <returns>City list from DonorSearch database by coordinates</returns>
-
-        [HttpGet("getDonorSearchCityByCoordinates")]
-        public async Task<ActionResult> getDonorSearchCityByCoordinates(double lat, double lon)
+        [HttpGet]
+        public async Task<ActionResult> Get(double lat, double lon)
         {
             return Content(await City.GetCityByCoordinatesTask(lat, lon));
         }
 
-        private ActionResult<string> Get(double lat, double lon)
+        //GET /api/Cities?pattern=<pattern>
+        [HttpGet]
+        public async Task<ActionResult> Get(string pattern)
         {
-            return getDonorSearchCityByCoordinates(lat, lon).Result;
+             return Content(await City.GetCityByTitleTask(pattern));
         }
-
-
     }
 }

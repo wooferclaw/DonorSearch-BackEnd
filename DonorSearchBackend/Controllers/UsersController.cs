@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using DonorSearchBackend.DAL;
+using DonorSearchBackend.DAL.Repositories;
 using DonorSearchBackend.Helpers;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -30,11 +31,8 @@ namespace DonorSearchBackend.Controllers
         {
             //From Api
             //return Content(await UserApi.GetUserByVKId(vkId));
-            DAL.User user = null;
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                user = db.Users.Where(u=>u.vk_id == vkId).FirstOrDefault();
-            }
+
+            DAL.User user = UserRepository.GetUserByVkId(vkId);
             //TODO: if null?
             return JsonConvert.SerializeObject(user);
         }
@@ -52,11 +50,7 @@ namespace DonorSearchBackend.Controllers
         {
             //TODO error -not right format
             DAL.User user = userJson.ToObject<DAL.User>();
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                db.Users.AddOrUpdate(user);
-                db.SaveChanges();
-            }
+            UserRepository.AddOrUpdateUser(user);
 
             //change in APi
             //mutation updateProfile($first_name: String, $second_name: String, $last_name: String, $maiden_name: String, $bdate: Int, $gender: Int, $city_id: Int, $about_self:String, $blood_type_id:Int, $kell: Int, $blood_class_ids:[Int],$bone_marrow: Boolean, $cant_to_be_donor: Boolean, $donor_pause_to: Int ) 
