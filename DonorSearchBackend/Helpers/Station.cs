@@ -172,7 +172,7 @@ namespace DonorSearchBackend.Helpers
                     //    station.requrement_of_user_blood = 1;
                     //else station.requrement_of_user_blood = 0;
                     station.requrement_of_user_blood = GetRandomNumber(0,2);
-                    station.accept_first_timers = (DonationApi.   (currentUser.vk_id)).IsEmpty();
+                   // station.accept_first_timers = (DonationApi.   (currentUser.vk_id)).IsEmpty();
                 }
 
                 stationsJson = JsonConvert.SerializeObject(stations);

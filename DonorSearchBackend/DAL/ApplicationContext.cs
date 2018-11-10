@@ -22,10 +22,6 @@ namespace DonorSearchBackend.DAL
          .HasIndex(u => u.vk_id)
          .IsUnique();
 
-            modelBuilder.Entity<User>()
-            .HasIndex(u => u.ds_id)
-            .IsUnique();
-
             modelBuilder.Entity<Donation>()
             .HasIndex(u => u.id)
             .IsUnique();

@@ -5,9 +5,9 @@ namespace DonorSearchBackend.Helpers
 {
     public class DonationApi
     {
-        public List<> GetDonations(int vkId)
-        {
-            throw new NotImplementedException();
-        }
+        //public List<> GetDonations(int vkId)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

@@ -10,7 +10,7 @@ namespace DonorSearchBackend.DAL
     public class User
     {
         [Key]
-        public int? vk_id { get; set; }
+        public int vk_id { get; set; }
         public string second_name { get; set; }
         public string maiden_name { get; set; }
         public DateTime? bdate { get; set; }
@@ -24,8 +24,6 @@ namespace DonorSearchBackend.DAL
         public bool? cant_to_be_donor { get; set; }
         public int? donor_pause_to { get; set; }
         public bool? has_registration { get; set; }
-        [Required]
-        public int ds_id { get; set; }
         [Required]
         public string first_name { get; set; }
         [Required]
