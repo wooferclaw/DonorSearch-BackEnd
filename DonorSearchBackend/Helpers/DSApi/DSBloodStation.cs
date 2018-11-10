@@ -48,8 +48,6 @@ namespace DonorSearchBackend.Helpers.DSApi
 
             //var currentUserJson = await DSUser.GetUserByVKId(vkId);
             //var currentUser = JsonConvert.DeserializeObject<DAL.User>(currentUserJson);
-
-            //TODO getcityidforuserfromdatabase
             var currentUser = UserRepository.GetUserByVkId(vkId);
 
             var cityId = currentUser.city_id;
