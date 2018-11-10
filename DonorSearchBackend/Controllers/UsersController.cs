@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using DonorSearchBackend.DAL;
-using DonorSearchBackend.DAL.Repositories;
+﻿using DonorSearchBackend.DAL.Repositories;
 using DonorSearchBackend.Helpers;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
 
 namespace DonorSearchBackend.Controllers
 {
@@ -63,8 +54,6 @@ namespace DonorSearchBackend.Controllers
             //{
             //    return JsonConvert.SerializeObject(new Result(false, ExceptionEnum.NotRightJSONFormat.ToString()));
             //}
-            
-
             DAL.User user = userJson.ToObject<DAL.User>();
             //считаем, что формат неправильный
             if (user.vk_id == 0 || string.IsNullOrEmpty(user.first_name) || string.IsNullOrEmpty(user.last_name))

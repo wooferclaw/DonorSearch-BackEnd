@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DonorSearchBackend.DAL;
+﻿using System.Collections.Generic;
 using DonorSearchBackend.DAL.Repositories;
 using DonorSearchBackend.Helpers;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
