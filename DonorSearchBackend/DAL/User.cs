@@ -39,22 +39,8 @@ namespace DonorSearchBackend.DAL
             {
                 //TODO time sorted blood requests
                 if (blood_type == needRequests.LastOrDefault().blood_type.title) return needRequests.LastOrDefault().intensity;
-
-                //switch (blood_type)
-                //{
-                //    case "0(I) Rh+": return needRequests.LastOrDefault().blood_type.title;
-                //    case "0(I) Rh-": return needRequests.LastOrDefault().intensity;
-                //    case "A(II) Rh+": return needRequests.LastOrDefault().intensity;
-                //    case "A(II) Rh-": return needRequests.LastOrDefault().intensity;
-                //    case "B(III) Rh+": return needRequests.LastOrDefault().intensity;
-                //    case "B(III) Rh-": return needRequests.LastOrDefault().intensity;
-                //    case "AB(IV) Rh+": return needRequests.LastOrDefault().intensity;
-                //    case "AB(IV) Rh-": return needRequests.LastOrDefault().intensity;
-
-                //    default: return -1;
-                //}
             }
-            return 50;
+            return 49;
         }
     }
 }

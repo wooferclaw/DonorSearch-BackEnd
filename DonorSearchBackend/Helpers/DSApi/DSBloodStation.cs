@@ -125,13 +125,14 @@ namespace DonorSearchBackend.Helpers.DSApi
                     //station.requrement_of_user_blood = GetRandomNumber(0,2);
 
                     //check if station accepts first timers
+
                     station.accept_first_timers = DonationRepository.GetDonationByVkId(currentUser.vk_id)
                         .All(c => cityId != currentUser.city_id);
 
                     var necessity = currentUser.CheckForBloodNeccesity(station.need_requests);
                     //chech for requirement of blood for current user
-                    if (necessity < 50) station.requrement_of_user_blood = -2;
-                    if (necessity > 50) station.requrement_of_user_blood = -1;
+                    if (necessity >= 50) station.requrement_of_user_blood = -2;
+                    if (necessity < 50) station.requrement_of_user_blood = -1;
                     if (necessity == 0) station.requrement_of_user_blood = 0;
 
                     //check if station accepts users without registration
