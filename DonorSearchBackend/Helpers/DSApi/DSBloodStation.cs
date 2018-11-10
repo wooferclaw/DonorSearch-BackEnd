@@ -52,6 +52,11 @@ namespace DonorSearchBackend.Helpers.DSApi
 
             var cityId = currentUser.city_id;
 
+            if (!cityId.HasValue || cityId == 0)
+            {
+                return "[]";
+            }
+
             using (var graphQlClient = new GraphQLClient(apiPath + apiKey))
             {
                 var stationsRequest = new GraphQLRequest
@@ -108,7 +113,7 @@ namespace DonorSearchBackend.Helpers.DSApi
                     OperationName = "blood_stations",
                     Variables = new
                     {
-                        id = cityId
+                        city_id = cityId   //TODO  query
                     }
                 };
 
