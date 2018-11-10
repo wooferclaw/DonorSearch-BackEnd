@@ -69,8 +69,6 @@ namespace DonorSearchBackend.Migrations
 
                     b.Property<int?>("donor_pause_to");
 
-                    b.Property<int>("ds_id");
-
                     b.Property<string>("first_name")
                         .IsRequired();
 
@@ -86,9 +84,6 @@ namespace DonorSearchBackend.Migrations
                     b.Property<string>("second_name");
 
                     b.HasKey("vk_id");
-
-                    b.HasIndex("ds_id")
-                        .IsUnique();
 
                     b.HasIndex("vk_id")
                         .IsUnique();

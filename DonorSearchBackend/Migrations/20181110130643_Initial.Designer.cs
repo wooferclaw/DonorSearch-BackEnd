@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DonorSearchBackend.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20181110114127_initial")]
-    partial class initial
+    [Migration("20181110130643_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,8 +71,6 @@ namespace DonorSearchBackend.Migrations
 
                     b.Property<int?>("donor_pause_to");
 
-                    b.Property<int>("ds_id");
-
                     b.Property<string>("first_name")
                         .IsRequired();
 
@@ -88,9 +86,6 @@ namespace DonorSearchBackend.Migrations
                     b.Property<string>("second_name");
 
                     b.HasKey("vk_id");
-
-                    b.HasIndex("ds_id")
-                        .IsUnique();
 
                     b.HasIndex("vk_id")
                         .IsUnique();
