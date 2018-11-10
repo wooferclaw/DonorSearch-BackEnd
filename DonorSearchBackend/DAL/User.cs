@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using DonorSearchBackend.Helpers;
 using DonorSearchBackend.Helpers.DSApi;
+using System.ComponentModel;
 
 namespace DonorSearchBackend.DAL
 {
@@ -26,12 +27,14 @@ namespace DonorSearchBackend.DAL
         public BloodClass blood_class_ids { get; set; }
         public bool? bone_marrow { get; set; }
         public bool? cant_to_be_donor { get; set; }
-        public int? donor_pause_to { get; set; }
+        public DateTime? donor_pause_to { get; set; }
         public bool? has_registration { get; set; }
         [Required]
         public string first_name { get; set; }
         [Required]
         public string last_name { get; set; }
+        [DefaultValue("false")]
+        public bool? is_first_donor { get; set; }
 
         public int CheckForBloodNeccesity(List<DSNeedRequest> needRequests)
         {
