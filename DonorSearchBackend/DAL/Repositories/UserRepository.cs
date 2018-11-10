@@ -12,10 +12,19 @@ namespace DonorSearchBackend.DAL.Repositories
             User user = null;
             using (ApplicationContext db = new ApplicationContext())
             {
-                user = db.Users.Where(u => u.vk_id == vkId).First();
-
+                user = db.Users.Where(u => u.vk_id == vkId).FirstOrDefault();
             }
             return user;
+        }
+
+        //TODO: error?
+        public static void AddOrUpdateUser(User user)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Users.AddOrUpdate(user);
+                db.SaveChanges();
+            }
         }
     }
 }

@@ -19,15 +19,10 @@ namespace DonorSearchBackend.Controllers
         /// <returns></returns>
         
         //GET /api/stations/{vk id}
-        [HttpGet("getStationsByVkId")]
-        public async Task<ActionResult> getStationsByVkId(int vkId)
+        [HttpGet("{vkId}")]
+        public async Task<ActionResult> Get(int vkId)
         {
               return Content(await BloodStation.GetBloodStationsByVkIdTask(vkId));
-        }
-
-        private ActionResult<string> Get(int vkId)
-        {
-            return getStationsByVkId(vkId).Result;
         }
     }
 }
