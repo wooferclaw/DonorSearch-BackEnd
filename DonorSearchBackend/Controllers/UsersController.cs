@@ -33,7 +33,7 @@ namespace DonorSearchBackend.Controllers
             DAL.User user = null;
             using (ApplicationContext db = new ApplicationContext())
             {
-                user = db.Users.Where(u=>u.vk_id == vkId).First();
+                user = db.Users.Where(u=>u.vk_id == vkId).FirstOrDefault();
             }
             //TODO: if null?
             return JsonConvert.SerializeObject(user);
