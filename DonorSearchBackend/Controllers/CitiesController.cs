@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DonorSearchBackend.Controllers
 {
     [EnableCors("AllowAll")]
-    [Route("api/[controller]")]
+    [Route("api/[controller]")]  
     [ApiController]
     public class CitiesController : Controller
     {
@@ -20,6 +20,7 @@ namespace DonorSearchBackend.Controllers
         /// <returns>City list from DonorSearch database by coordinates</returns>
         [EnableCors("AllowAll")]
         [HttpGet]
+
         public async Task<ActionResult> Get(double lat, double lon)
         {
             return Content(await City.GetCityByCoordinatesTask(lat, lon));
