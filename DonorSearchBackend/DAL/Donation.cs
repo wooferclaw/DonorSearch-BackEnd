@@ -13,7 +13,7 @@ namespace DonorSearchBackend.DAL
         [Required]
         public BloodClass blood_class_ids { get; set; } //какой типы сдачи хочет сдать/сдавал
         //id в donorsearch
-        public int? donation_Id { get; set; }
+        public int? ds_Id { get; set; }
         public bool? succeed { get; set; }
         public DateTime recomendation_timestamp { get; set; } //время, когда надо напоминать о сдаче анализа
         [Required]

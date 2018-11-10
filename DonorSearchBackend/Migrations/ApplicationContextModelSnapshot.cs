@@ -26,9 +26,9 @@ namespace DonorSearchBackend.Migrations
 
                     b.Property<int>("blood_class_ids");
 
-                    b.Property<int?>("donation_Id");
-
                     b.Property<DateTime>("donation_timestamp");
+
+                    b.Property<int?>("ds_Id");
 
                     b.Property<DateTime>("recomendation_timestamp");
 

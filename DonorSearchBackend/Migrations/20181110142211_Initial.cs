@@ -15,7 +15,7 @@ namespace DonorSearchBackend.Migrations
                     id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     blood_class_ids = table.Column<int>(nullable: false),
-                    donation_Id = table.Column<int>(nullable: true),
+                    ds_Id = table.Column<int>(nullable: true),
                     succeed = table.Column<bool>(nullable: true),
                     recomendation_timestamp = table.Column<DateTime>(nullable: false),
                     vk_id = table.Column<int>(nullable: false),
