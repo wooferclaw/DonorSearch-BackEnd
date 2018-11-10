@@ -21,28 +21,28 @@ namespace DonorSearchBackend.Migrations
 
             modelBuilder.Entity("DonorSearchBackend.DAL.Donation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("DonationId");
+                    b.Property<int>("blood_class_ids");
 
-                    b.Property<DateTime>("DonationTimestamp");
+                    b.Property<int?>("donation_Id");
 
-                    b.Property<int>("DonationType");
+                    b.Property<DateTime>("donation_timestamp");
 
-                    b.Property<DateTime>("RecomendationTimestamp");
+                    b.Property<DateTime>("recomendation_timestamp");
 
-                    b.Property<int>("StationId");
+                    b.Property<int>("station_id");
 
-                    b.Property<int>("StatusId");
+                    b.Property<int>("status_id");
 
-                    b.Property<bool>("Succeed");
+                    b.Property<bool?>("succeed");
 
-                    b.Property<int>("VkId");
+                    b.Property<int>("vk_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.HasIndex("Id")
+                    b.HasIndex("id")
                         .IsUnique();
 
                     b.ToTable("Donations");
@@ -50,17 +50,47 @@ namespace DonorSearchBackend.Migrations
 
             modelBuilder.Entity("DonorSearchBackend.DAL.User", b =>
                 {
-                    b.Property<int>("VkId")
+                    b.Property<int?>("vk_id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("DSId");
+                    b.Property<string>("about_self");
 
-                    b.HasKey("VkId");
+                    b.Property<DateTime?>("bdate");
 
-                    b.HasIndex("DSId")
+                    b.Property<int>("blood_class_ids");
+
+                    b.Property<int?>("blood_type_id");
+
+                    b.Property<bool?>("bone_marrow");
+
+                    b.Property<bool?>("cant_to_be_donor");
+
+                    b.Property<int?>("city_id");
+
+                    b.Property<int?>("donor_pause_to");
+
+                    b.Property<int>("ds_id");
+
+                    b.Property<string>("first_name")
+                        .IsRequired();
+
+                    b.Property<int?>("gender");
+
+                    b.Property<bool?>("has_registration");
+
+                    b.Property<string>("last_name")
+                        .IsRequired();
+
+                    b.Property<string>("maiden_name");
+
+                    b.Property<string>("second_name");
+
+                    b.HasKey("vk_id");
+
+                    b.HasIndex("ds_id")
                         .IsUnique();
 
-                    b.HasIndex("VkId")
+                    b.HasIndex("vk_id")
                         .IsUnique();
 
                     b.ToTable("Users");

@@ -9,20 +9,22 @@ namespace DonorSearchBackend.DAL
     public class Donation
     {
         [Key]
-        public int Id { get; set; }
+        public int id { get; set; }
         [Required]
-        public int VkId { get; set; }
-        [Required]
-        public DateTime DonationTimestamp{ get; set; }
-        [Required]
-        public int StationId { get; set; }
-        [Required]
-        public int StatusId { get; set; }
-        public int DonationType { get; set; } //какой типы сдачи хочет сдать/сдавал
+        public BloodClass blood_class_ids { get; set; } //какой типы сдачи хочет сдать/сдавал
         //id в donorsearch
-        public int DonationId { get; set; }
-        public bool Succeed { get; set; }
-        public DateTime RecomendationTimestamp { get; set; } //время, когда надо напоминать о сдаче анализа
+        public int? donation_Id { get; set; }
+        public bool? succeed { get; set; }
+        public DateTime recomendation_timestamp { get; set; } //время, когда надо напоминать о сдаче анализа
+        [Required]
+        public int vk_id { get; set; }
+        [Required]
+        public DateTime donation_timestamp{ get; set; }
+        [Required]
+        public int station_id { get; set; }
+        [Required]
+        public int status_id { get; set; }
+
 
     }
     public enum Statuses
