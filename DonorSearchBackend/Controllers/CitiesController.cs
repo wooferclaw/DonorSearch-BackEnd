@@ -18,6 +18,7 @@ namespace DonorSearchBackend.Controllers
         /// <param name="lat">Latitude</param>
         /// <param name="lon">Longitude</param>
         /// <returns>City list from DonorSearch database by coordinates</returns>
+        [EnableCors("AllowAll")]
         [HttpGet]
 
         public async Task<ActionResult> Get(double lat, double lon)
@@ -25,8 +26,14 @@ namespace DonorSearchBackend.Controllers
             return Content(await City.GetCityByCoordinatesTask(lat, lon));
         }
 
-        //GET /api/Cities?pattern=<pattern>
-        [HttpGet]
+        /// <summary>
+        /// Get cities by search pattern
+        /// </summary>
+        /// <param name="pattern">search pattern</param>
+        /// <returns></returns>
+        //GET /api/Cities/{pattern}
+        [EnableCors("AllowAll")]
+        [HttpGet("{pattern}")]
         public async Task<ActionResult> Get(string pattern)
         {
              return Content(await City.GetCityByTitleTask(pattern));
