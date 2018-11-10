@@ -7,7 +7,8 @@ namespace DonorSearchBackend.Helpers
         DBException,
         DonorsearchApiException,
         NotRightJSONFormat,
-        EmptyNonRequiredParameter
+        EmptyNonRequiredParameter,
+        WrongRequest
 
     }
     public class ErrorsResult

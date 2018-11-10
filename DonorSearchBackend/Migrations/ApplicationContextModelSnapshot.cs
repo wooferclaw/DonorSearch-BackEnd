@@ -24,23 +24,36 @@ namespace DonorSearchBackend.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Img")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("appointment_date_from");
+
+                    b.Property<DateTime>("appointment_date_to");
+
                     b.Property<int>("blood_class_ids");
 
-                    b.Property<DateTime>("donation_timestamp");
+                    b.Property<int?>("confirm_visitid");
+
+                    b.Property<DateTime?>("donation_date");
+
+                    b.Property<bool?>("donation_success");
 
                     b.Property<int?>("ds_Id");
 
-                    b.Property<DateTime>("recomendation_timestamp");
+                    b.Property<bool>("finished");
+
+                    b.Property<DateTime?>("previous_donation_date");
+
+                    b.Property<DateTime?>("recomendation_timestamp");
 
                     b.Property<int?>("station_id");
-
-                    b.Property<int>("status_id");
-
-                    b.Property<bool?>("succeed");
 
                     b.Property<int>("vk_id");
 
                     b.HasKey("id");
+
+                    b.HasIndex("confirm_visitid");
 
                     b.HasIndex("id")
                         .IsUnique();
@@ -69,7 +82,7 @@ namespace DonorSearchBackend.Migrations
 
                     b.Property<string>("city_title");
 
-                    b.Property<int?>("donor_pause_to");
+                    b.Property<DateTime?>("donor_pause_to");
 
                     b.Property<string>("first_name")
                         .IsRequired();
@@ -77,6 +90,8 @@ namespace DonorSearchBackend.Migrations
                     b.Property<int?>("gender");
 
                     b.Property<bool?>("has_registration");
+
+                    b.Property<bool?>("is_first_donor");
 
                     b.Property<string>("last_name")
                         .IsRequired();
@@ -93,6 +108,33 @@ namespace DonorSearchBackend.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DonorSearchBackend.DAL.ValidationVisit", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("date_from");
+
+                    b.Property<DateTime?>("date_to");
+
+                    b.Property<bool?>("success");
+
+                    b.Property<DateTime?>("visit_date");
+
+                    b.Property<bool?>("without_donation");
+
+                    b.HasKey("id");
+
+                    b.ToTable("ValidationVisit");
+                });
+
+            modelBuilder.Entity("DonorSearchBackend.DAL.Donation", b =>
+                {
+                    b.HasOne("DonorSearchBackend.DAL.ValidationVisit", "confirm_visit")
+                        .WithMany()
+                        .HasForeignKey("confirm_visitid");
                 });
 #pragma warning restore 612, 618
         }
