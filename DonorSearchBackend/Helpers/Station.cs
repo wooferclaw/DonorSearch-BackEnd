@@ -92,12 +92,11 @@ namespace DonorSearchBackend.Helpers
             string stationsJson;
 
             var currentUserJson = await UserApi.GetUserByVKId(vkId);
-            var currentUser = JsonConvert.DeserializeObject<User>(currentUserJson);
+            var currentUser = JsonConvert.DeserializeObject<DAL.User>(currentUserJson);
 
             //TODO getcityidforuserfromdatabase
 
-            var cityId = currentUser.city.id;
-
+            var cityId = currentUser.city_id;
 
             using (var graphQlClient = new GraphQLClient(apiPath + apiKey))
             {
