@@ -4,16 +4,16 @@
 
 CREATE TABLE public."Donations"
 (
-    "Id" integer NOT NULL DEFAULT nextval('"Donations_Id_seq"'::regclass),
-    "VkId" integer NOT NULL,
-    "DonationTimestamp" timestamp without time zone NOT NULL,
-    "StationId" integer NOT NULL,
-    "StatusId" integer NOT NULL,
-    "DonationType" integer NOT NULL,
-    "DonationId" integer,
-    "Succeed" boolean,
-    "RecomendationTimestamp" timestamp without time zone,
-    CONSTRAINT "PK_Donations" PRIMARY KEY ("Id")
+    id integer NOT NULL DEFAULT nextval('"Donations_id_seq"'::regclass),
+    blood_class_ids integer NOT NULL,
+    "donation_Id" integer,
+    succeed boolean,
+    recomendation_timestamp timestamp without time zone NOT NULL,
+    vk_id integer NOT NULL,
+    donation_timestamp timestamp without time zone NOT NULL,
+    station_id integer NOT NULL,
+    status_id integer NOT NULL,
+    CONSTRAINT "PK_Donations" PRIMARY KEY (id)
 )
 WITH (
     OIDS = FALSE
@@ -23,11 +23,11 @@ TABLESPACE pg_default;
 ALTER TABLE public."Donations"
     OWNER to postgres;
 
--- Index: IX_Donations_Id
+-- Index: IX_Donations_id
 
--- DROP INDEX public."IX_Donations_Id";
+-- DROP INDEX public."IX_Donations_id";
 
-CREATE UNIQUE INDEX "IX_Donations_Id"
+CREATE UNIQUE INDEX "IX_Donations_id"
     ON public."Donations" USING btree
-    ("Id")
+    (id)
     TABLESPACE pg_default;

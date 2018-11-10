@@ -4,9 +4,23 @@
 
 CREATE TABLE public."Users"
 (
-    "VkId" integer NOT NULL DEFAULT nextval('"Users_VkId_seq"'::regclass),
-    "DSId" integer NOT NULL,
-    CONSTRAINT "PK_Users" PRIMARY KEY ("VkId")
+    vk_id integer NOT NULL DEFAULT nextval('"Users_vk_id_seq"'::regclass),
+    second_name text COLLATE pg_catalog."default",
+    maiden_name text COLLATE pg_catalog."default",
+    bdate timestamp without time zone,
+    gender integer,
+    city_id integer,
+    about_self text COLLATE pg_catalog."default",
+    blood_type_id integer,
+    blood_class_ids integer NOT NULL,
+    bone_marrow boolean,
+    cant_to_be_donor boolean,
+    donor_pause_to integer,
+    has_registration boolean,
+    ds_id integer NOT NULL,
+    first_name text COLLATE pg_catalog."default" NOT NULL,
+    last_name text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "PK_Users" PRIMARY KEY (vk_id)
 )
 WITH (
     OIDS = FALSE
@@ -16,20 +30,20 @@ TABLESPACE pg_default;
 ALTER TABLE public."Users"
     OWNER to postgres;
 
--- Index: IX_Users_DSId
+-- Index: IX_Users_ds_id
 
--- DROP INDEX public."IX_Users_DSId";
+-- DROP INDEX public."IX_Users_ds_id";
 
-CREATE UNIQUE INDEX "IX_Users_DSId"
+CREATE UNIQUE INDEX "IX_Users_ds_id"
     ON public."Users" USING btree
-    ("DSId")
+    (ds_id)
     TABLESPACE pg_default;
 
--- Index: IX_Users_VkId
+-- Index: IX_Users_vk_id
 
--- DROP INDEX public."IX_Users_VkId";
+-- DROP INDEX public."IX_Users_vk_id";
 
-CREATE UNIQUE INDEX "IX_Users_VkId"
+CREATE UNIQUE INDEX "IX_Users_vk_id"
     ON public."Users" USING btree
-    ("VkId")
+    (vk_id)
     TABLESPACE pg_default;
