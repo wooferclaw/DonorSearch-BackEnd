@@ -1,8 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DonorSearchBackend.Helpers
 {
@@ -14,24 +10,30 @@ namespace DonorSearchBackend.Helpers
         EmptyNonRequiredParameter
 
     }
-    public class Result
+    public class ErrorsResult
     {
-        public bool isSuccess;
         public string error;
         public string errorDescription;
-        public Result(bool _isSuccess, string _error = null, string _descr = null)
+        public ErrorsResult(bool _isSuccess, string _error = null, string _descr = null)
         {
             error = _error;
-            isSuccess = _isSuccess;
             errorDescription = _descr;
+        }
+    }
+    public class OkResult
+    {
+        public bool isSuccess;
+        public OkResult(bool _isSuccess)
+        {
+            isSuccess = _isSuccess;
         }
     }
     public static class ResultHelper
     {
       public static string Error(ExceptionEnum type, string description = null)
-        { return JsonConvert.SerializeObject(new Result(false, type.ToString(),description)); }
+        { return JsonConvert.SerializeObject(new ErrorsResult(false, type.ToString(),description)); }
 
         public static string Success()
-        { return JsonConvert.SerializeObject(new Result(true)); }
+        { return JsonConvert.SerializeObject(new OkResult(true)); }
     }
 }

@@ -20,9 +20,19 @@ namespace DonorSearchBackend.DAL.Repositories
         //TODO: error?
         public static void AddOrUpdateUser(User user)
         {
+            
             using (ApplicationContext db = new ApplicationContext())
             {
-                db.Users.AddOrUpdate(user);
+                //if user founded in DB - update
+                if (db.Users.Any(u => u.vk_id == user.vk_id))
+                {
+                    var originalUser = db.Users.FirstOrDefault(u => u.vk_id == user.vk_id);
+                    db.Entry(originalUser).CurrentValues.SetValues(user);
+                }
+                else
+                {
+                    db.Users.Add(user);
+                }
                 db.SaveChanges();
             }
         }
