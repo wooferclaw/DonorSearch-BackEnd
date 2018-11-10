@@ -22,7 +22,7 @@ namespace DonorSearchBackend.Controllers
         /// </summary>
         /// <param name="vkId">vk Id</param>
         /// <returns>List of donations in JSON</returns>
-        /// /// <remarks>
+        ///<remarks>
         /// Example of donation JSON: {"id":1,"blood_class_ids":4,"ds_Id":null,"succeed":null,"recomendation_timestamp":"0001-01-01T00:00:00","vk_id":1,"donation_timestamp":"2018-11-10T17:25:05.1751202+03:00","station_id":1,"status_id":1}
         /// Blood_class_ids possible values:
         ///None = 0,
@@ -34,10 +34,10 @@ namespace DonorSearchBackend.Controllers
         ///Trombocites = 32
         ///status_id possible values:
         ///Appointment = 1,//запись + противопоказания
-        //Recomendations = 2,//рекомендации
-        //Donation = 3,//результат
-        //CheckAfterDonation = 4//проверка крови
-        /// </remarks>
+        ///Recomendations = 2,//рекомендации
+        ///Donation = 3,//результат
+        ///CheckAfterDonation = 4//проверка крови
+        ///</remarks>
         //GET /api/donations/{vkId}
     [EnableCors("AllowAll")]
         [HttpGet("{vkId}")]
@@ -77,10 +77,10 @@ namespace DonorSearchBackend.Controllers
         ///Trombocites = 32
         ///status_id possible values:
         ///Appointment = 1,//запись + противопоказания
-        //Recomendations = 2,//рекомендации
-        //Donation = 3,//результат
-        //CheckAfterDonation = 4//проверка крови
-        /// </remarks>
+        ///Recomendations = 2,//рекомендации
+        ///Donation = 3,//результат
+        ///CheckAfterDonation = 4//проверка крови
+        ///</remarks>
         [EnableCors("AllowAll")]
         [HttpPost]
         public string Post([FromBody] JObject donationJson)
