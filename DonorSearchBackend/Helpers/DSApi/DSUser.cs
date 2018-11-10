@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DonorSearchBackend.Helpers.DSApi;
 using GraphQL.Client;
 using GraphQL.Common.Request;
 using Microsoft.Extensions.Configuration;
@@ -11,22 +12,7 @@ using Newtonsoft.Json;
 
 namespace DonorSearchBackend.Helpers
 {
-    public class BloodClass
-    {
-        public string id { get; set; }
-        public string title { get; set; }
-    }
-    public class BloodType
-    {
-        public string id { get; set; }
-        public string title { get; set; }
-        public string display_title { get; set; }
-    }
-    public class DonationStatistic
-    { public int? count { get; set; }
-        public BloodClass blood_class { get; set; }
-    }
-    public class User
+    public class DSUser
     {
         public string id { get; set; }
         public string avatar { get; set; }
@@ -35,14 +21,11 @@ namespace DonorSearchBackend.Helpers
         public string last_name { get; set; }
         public string second_name { get; set; }
         public int? gender { get; set; }
-        public List<BloodClass> blood_classes { get; set; }
-        public BloodType blood_type { get; set; }
-        public City city { get; set; }
-        public List<DonationStatistic> donationStat { get; set; }
-    }
-    public static class UserApi
-    { 
-        //TODO: errors
+        public List<DSBloodClass> blood_classes { get; set; }
+        public DSBloodType blood_type { get; set; }
+        public DSCity city { get; set; }
+        public List<DSDonationStatistic> donationStat { get; set; }
+
         public static async Task<string> GetUserByVKId(int vkId)
         {
             var apiKey = ConfigurationManager.AppSetting["AppSettings:DonorSearchApiKey"];
@@ -68,7 +51,7 @@ namespace DonorSearchBackend.Helpers
                     }
                 };
                 var graphQlResponse = await graphQlClient.PostAsync(userGet);
-                var user = graphQlResponse.GetDataFieldAs<User>("user");
+                var user = graphQlResponse.GetDataFieldAs<DSUser>("user");
                 userJson = JsonConvert.SerializeObject(user);
             }
             return userJson;
@@ -78,7 +61,6 @@ namespace DonorSearchBackend.Helpers
         //    //var apiKey = ConfigurationManager.AppSetting["AppSettings:DonorSearchApiKey"];
         //    //var apiPath = ConfigurationManager.AppSetting["AppSettings:DonorSearchApiPath"];
         //    //string userJson;
-
         //    //using (var graphQlClient = new GraphQLClient(apiPath + apiKey))
         //    //{
         //    //    var userGet = new GraphQLRequest

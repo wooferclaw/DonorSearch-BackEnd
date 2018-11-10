@@ -1,30 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GraphQL.Client;
 using GraphQL.Common.Request;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Protocols;
 using Newtonsoft.Json;
 
 namespace DonorSearchBackend.Helpers
 {
-    public class Country
-    {
-        public string id { get; set; }
-        public string title { get; set; }
-    }
-
-    public class City
+    public class DSCity
     {
         public string id { get; set; }
         public string title { get; set; }
         public string area { get; set; }
         public object region { get; set; }
-        public Country country { get; set; }
+        public DSCountry country { get; set; }
 
         public static async Task<string> GetCityByTitleTask(string cityTitle)
         {
@@ -57,7 +45,7 @@ namespace DonorSearchBackend.Helpers
                     }
                 };
                 var graphQlResponse = await graphQlClient.PostAsync(cityRequest);
-                var cities = graphQlResponse.GetDataFieldAs<List<City>>("cities");
+                var cities = graphQlResponse.GetDataFieldAs<List<DSCity>>("cities");
                 citiesJson = JsonConvert.SerializeObject(cities);
             }
             return citiesJson;
@@ -66,9 +54,7 @@ namespace DonorSearchBackend.Helpers
         public static async Task<string> GetCityByCoordinatesTask(double lat, double lon)
         {
             var cityTitleOsm = await OsmLocation.GetStreetAddressByCoordinatesTask(lat, lon);
-
             var cityTitleDonorSearch = await GetCityByTitleTask(cityTitleOsm);
-
             return cityTitleDonorSearch;
         }
     }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using DonorSearchBackend.Helpers;
+using DonorSearchBackend.Helpers.DSApi;
 
 namespace DonorSearchBackend.DAL
 {
@@ -30,28 +31,28 @@ namespace DonorSearchBackend.DAL
         [Required]
         public string last_name { get; set; }
 
-        public int CheckForBloodNeccesity(List<NeedRequest> needRequests)
+        public int CheckForBloodNeccesity(List<DSNeedRequest> needRequests)
         {
             if (needRequests?.LastOrDefault() != null)
             {
                 //TODO time sorted blood requests
-                switch (blood_type)
-                {
-                    case "0+": return needRequests.LastOrDefault().one_plus_demand;
-                    case "0-": return needRequests.LastOrDefault().one_minus_demand;
-                    case "A+": return needRequests.LastOrDefault().two_plus_demand;
-                    case "A-": return needRequests.LastOrDefault().two_minus_demand;
-                    case "B+": return needRequests.LastOrDefault().three_plus_demand;
-                    case "B-": return needRequests.LastOrDefault().three_minus_demand;
-                    case "AB+": return needRequests.LastOrDefault().four_plus_demand;
-                    case "AB-": return needRequests.LastOrDefault().four_minus_demand;
+                if (blood_type == needRequests.LastOrDefault().blood_type.title) return needRequests.LastOrDefault().intensity;
 
-                    default: return -1;
-                }
+                //switch (blood_type)
+                //{
+                //    case "0(I) Rh+": return needRequests.LastOrDefault().blood_type.title;
+                //    case "0(I) Rh-": return needRequests.LastOrDefault().intensity;
+                //    case "A(II) Rh+": return needRequests.LastOrDefault().intensity;
+                //    case "A(II) Rh-": return needRequests.LastOrDefault().intensity;
+                //    case "B(III) Rh+": return needRequests.LastOrDefault().intensity;
+                //    case "B(III) Rh-": return needRequests.LastOrDefault().intensity;
+                //    case "AB(IV) Rh+": return needRequests.LastOrDefault().intensity;
+                //    case "AB(IV) Rh-": return needRequests.LastOrDefault().intensity;
+
+                //    default: return -1;
+                //}
             }
-            return -1;
+            return 50;
         }
     }
-
-    
 }

@@ -22,7 +22,7 @@ namespace DonorSearchBackend.Controllers
 
         public async Task<ActionResult> Get(double lat, double lon)
         {
-            return Content(await City.GetCityByCoordinatesTask(lat, lon));
+            return Content(await DSCity.GetCityByCoordinatesTask(lat, lon));
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace DonorSearchBackend.Controllers
         [HttpGet("{pattern}")]
         public async Task<ActionResult> Get(string pattern)
         {
-             return Content(await City.GetCityByTitleTask(pattern));
+             return Content(await DSCity.GetCityByTitleTask(pattern));
         }
     }
 }
