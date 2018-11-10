@@ -20,7 +20,7 @@ namespace DonorSearchBackend.Migrations
                     recomendation_timestamp = table.Column<DateTime>(nullable: false),
                     vk_id = table.Column<int>(nullable: false),
                     donation_timestamp = table.Column<DateTime>(nullable: false),
-                    station_id = table.Column<int>(nullable: false),
+                    station_id = table.Column<int>(nullable: true),
                     status_id = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -39,6 +39,8 @@ namespace DonorSearchBackend.Migrations
                     bdate = table.Column<DateTime>(nullable: true),
                     gender = table.Column<int>(nullable: true),
                     city_id = table.Column<int>(nullable: true),
+                    city_title = table.Column<string>(nullable: true),
+                    region_title = table.Column<string>(nullable: true),
                     about_self = table.Column<string>(nullable: true),
                     blood_type = table.Column<string>(nullable: true),
                     blood_class_ids = table.Column<int>(nullable: false),

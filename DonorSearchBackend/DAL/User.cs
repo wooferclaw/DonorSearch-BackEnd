@@ -18,6 +18,8 @@ namespace DonorSearchBackend.DAL
         public DateTime? bdate { get; set; }
         public int? gender { get; set; }
         public int? city_id { get; set; }
+        public string city_title { get; set; }
+        public string region_title { get; set; }
         public string about_self { get; set; }
         public string blood_type { get; set; }
         [Required]

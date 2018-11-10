@@ -11,7 +11,7 @@ namespace DonorSearchBackend.Helpers
         public string id { get; set; }
         public string title { get; set; }
         public string area { get; set; }
-        public object region { get; set; }
+        public DSRegion region { get; set; }
         public DSCountry country { get; set; }
 
         public static async Task<string> GetCityByTitleTask(string cityTitle)

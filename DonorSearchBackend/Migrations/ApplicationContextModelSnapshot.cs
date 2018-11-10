@@ -32,7 +32,7 @@ namespace DonorSearchBackend.Migrations
 
                     b.Property<DateTime>("recomendation_timestamp");
 
-                    b.Property<int>("station_id");
+                    b.Property<int?>("station_id");
 
                     b.Property<int>("status_id");
 
@@ -67,6 +67,8 @@ namespace DonorSearchBackend.Migrations
 
                     b.Property<int?>("city_id");
 
+                    b.Property<string>("city_title");
+
                     b.Property<int?>("donor_pause_to");
 
                     b.Property<string>("first_name")
@@ -80,6 +82,8 @@ namespace DonorSearchBackend.Migrations
                         .IsRequired();
 
                     b.Property<string>("maiden_name");
+
+                    b.Property<string>("region_title");
 
                     b.Property<string>("second_name");
 

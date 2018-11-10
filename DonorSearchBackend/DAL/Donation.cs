@@ -20,8 +20,7 @@ namespace DonorSearchBackend.DAL
         public int vk_id { get; set; }
         [Required]
         public DateTime donation_timestamp{ get; set; }
-        [Required]
-        public int station_id { get; set; }
+        public int? station_id { get; set; }
         [Required]
         public int status_id { get; set; }
 
