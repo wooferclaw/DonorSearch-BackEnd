@@ -30,7 +30,6 @@ namespace DonorSearchBackend.DAL
         public string first_name { get; set; }
         [Required]
         public string last_name { get; set; }
-
     }
     
 }
