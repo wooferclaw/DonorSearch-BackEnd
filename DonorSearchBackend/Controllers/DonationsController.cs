@@ -172,9 +172,9 @@ namespace DonorSearchBackend.Controllers
             }
 
 
-            DonationRepository.DeleteDonation(donationId);
+            DAL.Donation newDonation = DonationRepository.DeleteDonation(donationId);
 
-            
+            result = JsonConvert.SerializeObject(newDonation);
 
             return result;
         }
