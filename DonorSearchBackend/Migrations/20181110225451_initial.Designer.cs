@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DonorSearchBackend.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20181110221954_initial")]
+    [Migration("20181110225451_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

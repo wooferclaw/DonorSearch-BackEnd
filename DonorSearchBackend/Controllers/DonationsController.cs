@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DonorSearchBackend.DAL.Repositories;
 using DonorSearchBackend.Helpers;
 using Microsoft.AspNetCore.Cors;
@@ -13,12 +15,33 @@ namespace DonorSearchBackend.Controllers
     public class DonationsController : Controller
     {
         /// <summary>
-        /// Get donation by vkId
+        /// Get successful donations and donation for timeline by vkId
         /// </summary>
         /// <param name="vkId">vk Id</param>
+        /// <param name="type">successful or timeline</param>
         /// <returns>List of donations in JSON</returns>
         ///<remarks>
-        /// Example of donation JSON: {"id":1,"blood_class_ids":4,"ds_Id":null,"succeed":null,"recomendation_timestamp":"0001-01-01T00:00:00","vk_id":1,"donation_timestamp":"2018-11-10T17:25:05.1751202+03:00","station_id":1,"status_id":1}
+        /// Example of donation JSON:{
+        ///  "id": 0,
+        ///  "ds_Id": null,
+        ///  "vk_id": 0,
+        ///  "appointment_date_from": "0001-01-01T00:00:00",
+        ///  "appointment_date_to": "0001-01-01T00:00:00",
+        ///  "donation_date": null,
+        ///  "donation_success": null,
+        ///  "blood_class_ids": 0,
+        ///  "img": null,
+        ///  "station_id": null,
+        ///  "recomendation_timestamp": null,
+        ///  "finished": false,
+        ///  "confirm_visit": {
+        ///  "id": 0,
+        ///  "date_from": null,
+        ///  "date_to": null,
+        ///  "visit_date": null,
+        ///  "success": null
+        ///}
+        ///}
         /// Blood_class_ids possible values:
         ///None = 0,
         ///WholeBlood = 1,
@@ -27,28 +50,43 @@ namespace DonorSearchBackend.Controllers
         ///Granulocites = 8,
         ///Liekocites = 16,
         ///Trombocites = 32
-        ///status_id possible values:
-        ///Appointment = 1,//запись + противопоказания
-        ///Recomendations = 2,//рекомендации
-        ///Donation = 3,//результат
-        ///CheckAfterDonation = 4//проверка крови
         ///</remarks>
-        //GET /api/donations/{vkId}
+        //GET /api/donations/{vkId}?type=<successful/timeline>
     [EnableCors("AllowAll")]
         [HttpGet("{vkId}")]
-        public string Get(int vkId)
+        public string Get(int vkId, string type)
         {
-            string result;
+            string result = ResultHelper.Error(ExceptionEnum.WrongRequest);
 
            List<DAL.Donation> donations = DonationRepository.GetDonationByVkId(vkId);
             if(donations == null)
             {
-                result = ResultHelper.Error(ExceptionEnum.DBException);
+                return ResultHelper.Error(ExceptionEnum.DBException);
             }
-            else
+            switch (type)
             {
-                result = JsonConvert.SerializeObject(donations);
+                //получить все успешные донации
+                case "successful":
+                    List<DAL.Donation> successDonations = donations.Where(d=>d.donation_success==true).ToList();
+                    result = JsonConvert.SerializeObject(successDonations);
+                    break;
+                //текущий timeline, в котором пользователь находится
+                case "timeline":
+                    //если есть таймлайн в процессе (не finished) - выдаём его
+                    DAL.Donation timelineDonation = donations.Where(d=>d.finished == false).ToList().FirstOrDefault();
+                    //если в процессе таймлайна нет - создаём его
+                    if (timelineDonation == null)
+                    {
+                        //вычислить дату после которой донор может записаться на донацию
+                        DateTime appointmentFrom = UserRepository.GetUserByVkId(vkId).donor_pause_to.HasValue ? UserRepository.GetUserByVkId(vkId).donor_pause_to.Value : DateTime.Now;
+                        DAL.Donation newAppointment = new DAL.Donation() { vk_id = vkId, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7)};
+                        timelineDonation = newAppointment;
+                    }
+
+                    result = JsonConvert.SerializeObject(timelineDonation);
+                    break;
             }
+            
             return result;
         }
 
@@ -60,8 +98,6 @@ namespace DonorSearchBackend.Controllers
         /// <param name="donationJson">donation in JSON</param>
         /// <returns></returns>
         /// <remarks>
-        /// Example of donation JSON for creation: {"blood_class_ids":4,"ds_Id":null,"succeed":null,"recomendation_timestamp":"0001-01-01T00:00:00","vk_id":1,"donation_timestamp":"2018-11-10T17:25:05.1751202+03:00","station_id":1,"status_id":1}
-        ///  Example of donation JSON for updation: {"blood_class_ids":4,"ds_Id":null,"succeed":null,"recomendation_timestamp":"0001-01-01T00:00:00","vk_id":1,"donation_timestamp":"2018-11-10T17:25:05.1751202+03:00","station_id":1,"status_id":1}
         /// Blood_class_ids possible values:
         ///None = 0,
         ///WholeBlood = 1,
@@ -70,11 +106,6 @@ namespace DonorSearchBackend.Controllers
         ///Granulocites = 8,
         ///Liekocites = 16,
         ///Trombocites = 32
-        ///status_id possible values:
-        ///Appointment = 1,//запись + противопоказания
-        ///Recomendations = 2,//рекомендации
-        ///Donation = 3,//результат
-        ///CheckAfterDonation = 4//проверка крови
         ///</remarks>
         [EnableCors("AllowAll")]
         [HttpPost]
@@ -82,29 +113,16 @@ namespace DonorSearchBackend.Controllers
         {
             string result;
             DAL.Donation donation=donationJson.ToObject<DAL.Donation>();
-            //считаем, что формат неправильный
-            if (donation.vk_id == 0 || donation.station_id == 0 /*|| donation.status_id == 0*/ )
-            {
-                return ResultHelper.Error(ExceptionEnum.NotRightJSONFormat);
-            }
             #region  Проверка заполненности обязательных полей
             if (donation.vk_id == 0)
             {
                 return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "vk_id");
             }
-            if (donation.station_id == 0)
-            {
-                return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "station_id");
-            }
-            //if (donation.status_id == 0)
-            //{
-            //    return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "status_id");
-            //}
             #endregion
+            //Донация ещё не создана
             if (donation.id == 0)
             {
-                DonationRepository.AddDonation(donation);
-                
+                DonationRepository.AddDonation(donation); 
             }
             else
             {
