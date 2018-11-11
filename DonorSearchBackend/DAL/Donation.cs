@@ -29,10 +29,5 @@ namespace DonorSearchBackend.DAL
         public bool finished { get; set; }//закончился ли наш трек по этой задаче?
         public ValidationVisit confirm_visit { get; set; }//повторный визит для проверки анализа через 3-6 месяцев
         public DateTime? previous_donation_date { get; set; }
-
-
-
-
-
     }
 }

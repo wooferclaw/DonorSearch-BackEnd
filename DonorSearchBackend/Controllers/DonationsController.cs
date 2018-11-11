@@ -83,7 +83,7 @@ namespace DonorSearchBackend.Controllers
             string result;
             DAL.Donation donation=donationJson.ToObject<DAL.Donation>();
             //считаем, что формат неправильный
-            if (donation.vk_id == 0 || donation.station_id == 0 || donation.status_id == 0 )
+            if (donation.vk_id == 0 || donation.station_id == 0 /*|| donation.status_id == 0*/ )
             {
                 return ResultHelper.Error(ExceptionEnum.NotRightJSONFormat);
             }
@@ -96,10 +96,10 @@ namespace DonorSearchBackend.Controllers
             {
                 return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "station_id");
             }
-            if (donation.status_id == 0)
-            {
-                return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "status_id");
-            }
+            //if (donation.status_id == 0)
+            //{
+            //    return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "status_id");
+            //}
             #endregion
             if (donation.id == 0)
             {

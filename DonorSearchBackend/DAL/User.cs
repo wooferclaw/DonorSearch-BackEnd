@@ -7,6 +7,8 @@ using System.ComponentModel.DataAnnotations;
 using DonorSearchBackend.Helpers;
 using DonorSearchBackend.Helpers.DSApi;
 using System.ComponentModel;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace DonorSearchBackend.DAL
 {
@@ -44,6 +46,19 @@ namespace DonorSearchBackend.DAL
                 if (blood_type == needRequests.LastOrDefault().blood_type.title) return needRequests.LastOrDefault().intensity;
             }
             return 49;
+        }
+
+        public async Task<string> SendPushNotification(string message, string fragment)
+        {
+            string accessToken = ConfigurationManager.AppSetting["AppSettings:VkAccessToken"];
+
+            var httpClient = new HttpClient { BaseAddress = new Uri("https://api.vk.com/method/") };
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "DonorSearchBackend");
+
+            var httpResult = await httpClient.GetAsync(
+                string.Format("notifications.sendMessage?user_ids={0}&message={1}&access_token={2}", vk_id, message, accessToken));
+
+            return httpResult.ReasonPhrase;
         }
     }
 }
