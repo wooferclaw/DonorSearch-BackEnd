@@ -73,7 +73,7 @@ namespace DonorSearchBackend.Controllers
                 //текущий timeline, в котором пользователь находится
                 case "timeline":
                     //если есть таймлайн в процессе (не finished) - выдаём его
-                    DAL.Donation timelineDonation = donations.Where(d=>d.finished == false).ToList().FirstOrDefault();
+                    DAL.Donation timelineDonation = donations.Where(d=>d.finished == false).ToList().LastOrDefault();
                     //если в процессе таймлайна нет - создаём его
                     if (timelineDonation == null)
                     {
@@ -81,9 +81,11 @@ namespace DonorSearchBackend.Controllers
                         DateTime appointmentFrom = UserRepository.GetUserByVkId(vkId).donor_pause_to.HasValue ? UserRepository.GetUserByVkId(vkId).donor_pause_to.Value : DateTime.Now;
                         DAL.Donation newAppointment = new DAL.Donation() { vk_id = vkId, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7)};
                         timelineDonation = newAppointment;
+                        DonationRepository.AddDonation(timelineDonation);
                     }
 
                     result = JsonConvert.SerializeObject(timelineDonation);
+                    
                     break;
             }
             
@@ -119,32 +121,25 @@ namespace DonorSearchBackend.Controllers
                 return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "vk_id");
             }
             #endregion
-            //Донация ещё не создана
-            if (donation.id == 0)
-            {
-                DonationRepository.AddDonation(donation); 
-            }
-            else
-            {
                 DonationRepository.UpdateDonation(donation);
-                //Когда пользователь посетит центр и сделает донацию или сдаст кровь из пальца (повторно)
-                if (donation.confirm_visit != null && donation.confirm_visit.success != null && donation.confirm_visit.without_donation != null)
+            //Когда пользователь посетит центр и сделает донацию или сдаст кровь из пальца (повторно)
+            if (donation.confirm_visit != null && donation.confirm_visit.success != null && donation.confirm_visit.without_donation != null)
+            {
+                //вернуть новую запись с заполненными полями(appointment_date_from, appointment_date_to, previous_donation_date)
+                //вычислить дату после которой донор может записаться на донацию
+                DateTime appointmentFrom = UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.HasValue ? UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.Value : DateTime.Now;
+                DAL.Donation newAppointment = new DAL.Donation() { vk_id = donation.vk_id, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7), previous_donation_date = donation.donation_date.Value };
+                //Если success = true + without_donation = false из старого объекта скопируется центр
+                if (donation.confirm_visit.success == true && donation.confirm_visit.without_donation == false)
                 {
-                    //вернуть новую запись с заполненными полями(appointment_date_from, appointment_date_to, previous_donation_date)
-                    //вычислить дату после которой донор может записаться на донацию
-                    DateTime appointmentFrom = UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.HasValue ? UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.Value : DateTime.Now;
-                    DAL.Donation newAppointment = new DAL.Donation() { vk_id = donation.vk_id, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7), previous_donation_date = donation.donation_date.Value };
-                    //Если success = true + without_donation = false из старого объекта скопируется центр
-                    if (donation.confirm_visit.success == true && donation.confirm_visit.without_donation == false)
-                    {
-                        newAppointment.station_id = donation.station_id;
-                        newAppointment.station_address = donation.station_address;
-                        newAppointment.station_title = donation.station_title;
-                    }
-                    donation = newAppointment;
-                    DonationRepository.AddDonation(donation);
+                    newAppointment.station_id = donation.station_id;
+                    newAppointment.station_address = donation.station_address;
+                    newAppointment.station_title = donation.station_title;
                 }
+                donation = newAppointment;
+                DonationRepository.AddDonation(donation);
             }
+            
             result = JsonConvert.SerializeObject(donation);
             return result;
         }
