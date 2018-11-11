@@ -87,13 +87,18 @@ namespace DonorSearchBackend.DAL.Repositories
             }
         }
         //TODO: error? - return result
-        public static void DeleteDonation(int donationId)
+        public static Donation DeleteDonation(int donationId)
         {
+            DAL.Donation newAppointment = new Donation();
             using (ApplicationContext db = new ApplicationContext())
             {
                 Donation donation = db.Donations.Where(d => d.id == donationId).FirstOrDefault();
                 if (donation != null)
                 {
+                    //new donation
+                    DateTime appointmentFrom = UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.HasValue ? UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.Value : DateTime.Now;
+                    newAppointment = new DAL.Donation() { vk_id = donation.vk_id, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7), previous_donation_date = donation.donation_date.Value };
+                    
                     db.Donations.Remove(donation);
                     db.SaveChanges();
                 }
@@ -101,7 +106,9 @@ namespace DonorSearchBackend.DAL.Repositories
                 {
                     //TODO donation doesn't exist
                 }
+
             }
+            return newAppointment;
         }
     }
 }

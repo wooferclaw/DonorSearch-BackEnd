@@ -170,7 +170,11 @@ namespace DonorSearchBackend.Controllers
             {
                 return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "donationId");
             }
+
+
             DonationRepository.DeleteDonation(donationId);
+
+            
 
             return result;
         }
