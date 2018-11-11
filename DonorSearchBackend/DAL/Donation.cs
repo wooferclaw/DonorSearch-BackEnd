@@ -24,6 +24,8 @@ namespace DonorSearchBackend.DAL
         [MaxLength]
         public string Img { get; set; }//фото справки в base64
         public int? station_id { get; set; }
+        public string station_title { get; set; }
+        public string station_address { get; set; }
         public DateTime? recomendation_timestamp { get; set; } //время, когда надо напоминать о сдаче анализа
         [DefaultValue("false")]
         public bool finished { get; set; }//закончился ли наш трек по этой задаче?

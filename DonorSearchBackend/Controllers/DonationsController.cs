@@ -96,7 +96,7 @@ namespace DonorSearchBackend.Controllers
         /// Creating donation for user, if "id" is not 0 - update
         /// </summary>
         /// <param name="donationJson">donation in JSON</param>
-        /// <returns></returns>
+        /// <returns>new donation in JSON fornmat</returns>
         /// <remarks>
         /// Blood_class_ids possible values:
         ///None = 0,
@@ -128,7 +128,7 @@ namespace DonorSearchBackend.Controllers
             {
                 DonationRepository.UpdateDonation(donation);
             }
-            result = JsonConvert.SerializeObject(donation.id);
+            result = JsonConvert.SerializeObject(donation);
             return result;
         }
 
