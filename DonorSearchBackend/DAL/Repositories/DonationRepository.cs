@@ -61,9 +61,25 @@ namespace DonorSearchBackend.DAL.Repositories
                 var originalDonation= db.Donations.FirstOrDefault(d => d.id == donation.id && d.vk_id == donation.vk_id);
                 //если заполнена дата донации+она изменилась, то определим период для повторного визита 
                 //и дату когда будут посылаться уведомления с рекомендацией
-                if(donation.donation_date.HasValue && donation.donation_date != originalDonation.donation_date)
+                if(!(donation.donation_date.HasValue && originalDonation.donation_date.HasValue) || !(donation.donation_date.Value.ToString() == originalDonation.donation_date.Value.ToString()))
                 {
                     CalculateDates(donation);
+                }
+                //когда ставится, что донор сдал кровь - обновляем противопоказания
+                if (donation.donation_success.HasValue && donation.donation_success.Value)
+                {
+                   User user = UserRepository.GetUserByVkId(donation.vk_id);
+                    //TODO: 60 дней только для цельной крови
+                    user.donor_pause_to = donation.donation_date.Value.AddDays(60);
+                    UserRepository.AddOrUpdateUser(user);
+                }
+                //Когда пользователь посетит центр и сделает донацию или сдаст кровь из пальца (повторно)
+                if (donation.confirm_visit != null && donation.confirm_visit.success != null && donation.confirm_visit.without_donation != null)
+                {
+                    //finished переходит в true 
+                    donation.finished = true;
+                    //+ вернётся новая запись с заполненными полями(appointment_date_from, appointment_date_to, previous_donation_date)
+                    //Если success = true + without_donation = false из старого объекта скопируется центр
                 }
                 db.Entry(originalDonation).CurrentValues.SetValues(donation);
                 db.SaveChanges();

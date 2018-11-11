@@ -127,6 +127,22 @@ namespace DonorSearchBackend.Controllers
             else
             {
                 DonationRepository.UpdateDonation(donation);
+                //Когда пользователь посетит центр и сделает донацию или сдаст кровь из пальца (повторно)
+                if (donation.confirm_visit != null && donation.confirm_visit.success != null && donation.confirm_visit.without_donation != null)
+                {
+                    //вернуть новую запись с заполненными полями(appointment_date_from, appointment_date_to, previous_donation_date)
+                    //вычислить дату после которой донор может записаться на донацию
+                    DateTime appointmentFrom = UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.HasValue ? UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.Value : DateTime.Now;
+                    DAL.Donation newAppointment = new DAL.Donation() { vk_id = donation.vk_id, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7), previous_donation_date = donation.donation_date.Value };
+                    //Если success = true + without_donation = false из старого объекта скопируется центр
+                    if (donation.confirm_visit.success == true && donation.confirm_visit.without_donation == false)
+                    {
+                        newAppointment.station_id = donation.station_id;
+                        newAppointment.station_address = donation.station_address;
+                        newAppointment.station_title = donation.station_title;
+                    }
+                    donation = newAppointment;
+                }
             }
             result = JsonConvert.SerializeObject(donation);
             return result;
