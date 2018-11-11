@@ -58,6 +58,7 @@ namespace DonorSearchBackend.DAL.Repositories
         {
             using (ApplicationContext db = new ApplicationContext())
             {
+                donation.confirm_visit = new ValidationVisit();
                 var originalDonation= db.Donations.FirstOrDefault(d => d.id == donation.id && d.vk_id == donation.vk_id);
                 //если заполнена дата донации+она изменилась, то определим период для повторного визита 
                 //и дату когда будут посылаться уведомления с рекомендацией
