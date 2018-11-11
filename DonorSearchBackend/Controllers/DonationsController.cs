@@ -142,6 +142,7 @@ namespace DonorSearchBackend.Controllers
                         newAppointment.station_title = donation.station_title;
                     }
                     donation = newAppointment;
+                    DonationRepository.AddDonation(donation);
                 }
             }
             result = JsonConvert.SerializeObject(donation);
@@ -173,7 +174,7 @@ namespace DonorSearchBackend.Controllers
 
 
             DAL.Donation newDonation = DonationRepository.DeleteDonation(donationId);
-
+            DonationRepository.AddDonation(newDonation);
             result = JsonConvert.SerializeObject(newDonation);
 
             return result;
