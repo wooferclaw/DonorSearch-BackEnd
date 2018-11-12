@@ -5,10 +5,13 @@ Frontend repository is: https://github.com/DenisNP/DonorSearchFrontend
 
 ## Project setup
 This project uses ASP.NET Core WebAPI 2.1 as main runtime.
+
 To build from sources you need SDK.
+
 To install it, follow official Microsoft guide: https://www.microsoft.com/net/download/dotnet-core/2.1
 
 PostgreSQL database on localhost is required.
+
 To install it, follow official PostgreSQL guide: https://www.postgresql.org/download/
 
 ## Running 
@@ -21,6 +24,7 @@ git clone
 dotnet restore
 ```
 4.Check databse connections string, api keys and logging level in `appsettings.json` 
+
 5.Run the application to get started. 
 ```
 dotnet run
