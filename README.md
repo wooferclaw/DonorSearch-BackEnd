@@ -15,17 +15,17 @@ PostgreSQL database on localhost is required.
 To install it, follow official PostgreSQL guide: https://www.postgresql.org/download/
 
 ## Running 
-1.Clone this repo
+1. Clone this repo
 ```
 git clone
 ```
-2.Restore the dependencies and tools of a project.
+2. Restore the dependencies and tools of a project.
 ```
 dotnet restore
 ```
-4.Check databse connections string, api keys and logging level in `appsettings.json` 
+4. Check databse connections string, api keys and logging level in `appsettings.json` 
 
-5.Run the application to get started. 
+5. Run the application to get started. 
 ```
 dotnet run
 ```
