@@ -64,7 +64,7 @@ namespace DonorSearchBackend.DAL.Repositories
                 {
                     donation.confirm_visit = new ValidationVisit();
                 }
-                var originalDonation= db.Donations.FirstOrDefault(d => d.id == donation.id && d.vk_id == donation.vk_id);
+                var originalDonation= db.Donations.Include(d=>d.confirm_visit).FirstOrDefault(d => d.id == donation.id && d.vk_id == donation.vk_id);
                 //если заполнена дата донации+она изменилась, то определим период для повторного визита 
                 //и дату когда будут посылаться уведомления с рекомендацией
                 if (donation.donation_date.HasValue && originalDonation.donation_date.HasValue)
@@ -75,7 +75,7 @@ namespace DonorSearchBackend.DAL.Repositories
                     }
                 }
                 //когда ставится, что донор сдал кровь - обновляем противопоказания
-                if (donation.donation_success.HasValue && donation.donation_success.Value)
+                if (donation.donation_success.HasValue)
                 {
                    User user = UserRepository.GetUserByVkId(donation.vk_id);
                     //TODO: 60 дней только для цельной крови
@@ -87,10 +87,9 @@ namespace DonorSearchBackend.DAL.Repositories
                 {
                     //finished переходит в true 
                     donation.finished = true;
-                    //+ вернётся новая запись с заполненными полями(appointment_date_from, appointment_date_to, previous_donation_date)
-                    //Если success = true + without_donation = false из старого объекта скопируется центр
                 }
                 db.Entry(originalDonation).CurrentValues.SetValues(donation);
+                db.Entry(originalDonation.confirm_visit).CurrentValues.SetValues(donation.confirm_visit);
                 db.SaveChanges();
             }
         }
@@ -100,7 +99,7 @@ namespace DonorSearchBackend.DAL.Repositories
             DAL.Donation newAppointment = new Donation();
             using (ApplicationContext db = new ApplicationContext())
             {
-                Donation donation = db.Donations.Where(d => d.id == donationId).FirstOrDefault();
+                Donation donation = db.Donations.Include(d => d.confirm_visit).Where(d => d.id == donationId).FirstOrDefault();
                 if (donation != null)
                 {
                     //вернуть новую донацию
