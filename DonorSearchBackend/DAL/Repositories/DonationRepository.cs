@@ -104,7 +104,13 @@ namespace DonorSearchBackend.DAL.Repositories
                 {
                     //вернуть новую донацию
                     DateTime appointmentFrom = UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.HasValue ? UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.Value : DateTime.Now;
-                    newAppointment = new DAL.Donation() { vk_id = donation.vk_id, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7), previous_donation_date = donation.donation_date.Value };
+                    //предыдущую дату выдачи проставляем только если была успешная сдача в этой
+                    DateTime? previous_success_date = null;
+                    if (donation.donation_date.HasValue && donation.donation_success == true)
+                    {
+                        previous_success_date = donation.donation_date.Value;
+                    }
+                    newAppointment = new DAL.Donation() { vk_id = donation.vk_id, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7), previous_donation_date = previous_success_date };
                     
                     db.Donations.Remove(donation);
                     db.SaveChanges();

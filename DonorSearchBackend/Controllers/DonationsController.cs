@@ -133,7 +133,13 @@ namespace DonorSearchBackend.Controllers
                 //вернуть новую запись с заполненными полями(appointment_date_from, appointment_date_to, previous_donation_date)
                 //вычислить дату после которой донор может записаться на донацию
                 DateTime appointmentFrom = UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.HasValue ? UserRepository.GetUserByVkId(donation.vk_id).donor_pause_to.Value : DateTime.Now;
-                DAL.Donation newAppointment = new DAL.Donation() { vk_id = donation.vk_id, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7), previous_donation_date = donation.donation_date.Value };
+                //предыдущую дату выдачи проставляем только если была успешная сдача в этой
+                DateTime? previous_success_date = null;
+                if (donation.donation_date.HasValue && donation.donation_success == true)
+                {
+                    previous_success_date = donation.donation_date.Value;
+                }
+                DAL.Donation newAppointment = new DAL.Donation() { vk_id = donation.vk_id, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7), previous_donation_date = previous_success_date };
                 //Если success = true + without_donation = false из старого объекта скопируется центр
                 if (donation.confirm_visit.success == true && donation.confirm_visit.without_donation == false)
                 {
