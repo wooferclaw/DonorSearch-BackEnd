@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DonorSearchBackend.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20181110225451_initial")]
-    partial class initial
+    [Migration("20181111113829_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,11 @@ namespace DonorSearchBackend.Migrations
 
                     b.Property<DateTime?>("recomendation_timestamp");
 
+                    b.Property<string>("station_address");
+
                     b.Property<int?>("station_id");
+
+                    b.Property<string>("station_title");
 
                     b.Property<int>("vk_id");
 

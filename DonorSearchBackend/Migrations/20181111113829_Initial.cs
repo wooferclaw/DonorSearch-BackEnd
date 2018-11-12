@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DonorSearchBackend.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,6 +69,8 @@ namespace DonorSearchBackend.Migrations
                     blood_class_ids = table.Column<int>(nullable: false),
                     Img = table.Column<string>(type: "text", nullable: true),
                     station_id = table.Column<int>(nullable: true),
+                    station_title = table.Column<string>(nullable: true),
+                    station_address = table.Column<string>(nullable: true),
                     recomendation_timestamp = table.Column<DateTime>(nullable: true),
                     finished = table.Column<bool>(nullable: false),
                     confirm_visitid = table.Column<int>(nullable: true),

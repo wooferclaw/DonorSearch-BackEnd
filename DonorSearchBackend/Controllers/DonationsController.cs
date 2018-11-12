@@ -78,7 +78,11 @@ namespace DonorSearchBackend.Controllers
                     if (timelineDonation == null)
                     {
                         //вычислить дату после которой донор может записаться на донацию
-                        DateTime appointmentFrom = UserRepository.GetUserByVkId(vkId).donor_pause_to.HasValue ? UserRepository.GetUserByVkId(vkId).donor_pause_to.Value : DateTime.Now;
+                        DateTime appointmentFrom = DateTime.Now;
+                        if (UserRepository.GetUserByVkId(vkId).donor_pause_to.HasValue && UserRepository.GetUserByVkId(vkId).donor_pause_to.Value>DateTime.Now)
+                        {
+                            appointmentFrom = UserRepository.GetUserByVkId(vkId).donor_pause_to.Value;
+                        }
                         DAL.Donation newAppointment = new DAL.Donation() { vk_id = vkId, appointment_date_from = appointmentFrom, appointment_date_to = appointmentFrom.AddDays(7)};
                         timelineDonation = newAppointment;
                         DonationRepository.AddDonation(timelineDonation);
