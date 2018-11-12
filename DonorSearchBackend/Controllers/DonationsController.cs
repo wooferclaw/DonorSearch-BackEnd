@@ -79,7 +79,8 @@ namespace DonorSearchBackend.Controllers
                     {
                         //вычислить дату после которой донор может записаться на донацию
                         DateTime appointmentFrom = DateTime.Now;
-                        if (UserRepository.GetUserByVkId(vkId).donor_pause_to.HasValue && UserRepository.GetUserByVkId(vkId).donor_pause_to.Value>DateTime.Now)
+                        DAL.User user = UserRepository.GetUserByVkId(vkId);
+                        if (user!= null && user.donor_pause_to.HasValue && user.donor_pause_to.Value>DateTime.Now)
                         {
                             appointmentFrom = UserRepository.GetUserByVkId(vkId).donor_pause_to.Value;
                         }
@@ -172,8 +173,7 @@ namespace DonorSearchBackend.Controllers
             }
 
 
-            DAL.Donation newDonation = DonationRepository.DeleteDonation(donationId);
-            DonationRepository.AddDonation(newDonation);
+            DAL.Donation newDonation = DonationRepository.DeleteAndAddNewDonation(donationId);
             result = JsonConvert.SerializeObject(newDonation);
 
             return result;
