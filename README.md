@@ -30,7 +30,9 @@ dotnet restore
 dotnet run
 ```
 By default `kestrel` uses port `5000` fot HTTP and port `5001` for HTTPS.
+
 For API documentation we use Swagger (https://swagger.io/)
+
 To check the API use `localhost:5000/swagger`
 
 
