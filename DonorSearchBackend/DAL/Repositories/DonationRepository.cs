@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace DonorSearchBackend.DAL.Repositories
             List<Donation> donationsList = null;
             using (ApplicationContext db = new ApplicationContext())
             {
-                donationsList = db.Donations.Where(u => u.vk_id == vkId).ToList();
+                donationsList = db.Donations.Include(d=>d.confirm_visit).Where(u => u.vk_id == vkId).ToList();
             }
             return donationsList;
         }
@@ -29,6 +30,7 @@ namespace DonorSearchBackend.DAL.Repositories
                 {
                     CalculateDates(donation);
                 }
+
                 db.Donations.Add(donation);
                 db.SaveChanges();
             }
@@ -65,9 +67,12 @@ namespace DonorSearchBackend.DAL.Repositories
                 var originalDonation= db.Donations.FirstOrDefault(d => d.id == donation.id && d.vk_id == donation.vk_id);
                 //если заполнена дата донации+она изменилась, то определим период для повторного визита 
                 //и дату когда будут посылаться уведомления с рекомендацией
-                if(!((donation.donation_date.HasValue && originalDonation.donation_date.HasValue) && (donation.donation_date.Value.ToString() == originalDonation.donation_date.Value.ToString())))
+                if (donation.donation_date.HasValue && originalDonation.donation_date.HasValue)
                 {
-                    CalculateDates(donation);
+                    if(donation.donation_date.Value.ToString() != originalDonation.donation_date.Value.ToString())
+                    { 
+                        CalculateDates(donation);
+                    }
                 }
                 //когда ставится, что донор сдал кровь - обновляем противопоказания
                 if (donation.donation_success.HasValue && donation.donation_success.Value)
