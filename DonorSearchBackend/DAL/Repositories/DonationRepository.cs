@@ -67,13 +67,12 @@ namespace DonorSearchBackend.DAL.Repositories
                 var originalDonation= db.Donations.Include(d=>d.confirm_visit).FirstOrDefault(d => d.id == donation.id && d.vk_id == donation.vk_id);
                 //если заполнена дата донации+она изменилась, то определим период для повторного визита 
                 //и дату когда будут посылаться уведомления с рекомендацией
-                if (donation.donation_date.HasValue && originalDonation.donation_date.HasValue)
-                {
-                    if(donation.donation_date.Value.ToString() != originalDonation.donation_date.Value.ToString())
+                if ((donation.donation_date.HasValue && originalDonation.donation_date == null) ||
+                    (donation.donation_date.HasValue && originalDonation.donation_date.HasValue && (donation.donation_date.Value.ToString() != originalDonation.donation_date.Value.ToString())))
                     { 
                         CalculateDates(donation);
                     }
-                }
+                
                 //когда ставится, что донор сдал кровь - обновляем противопоказания
                 if (donation.donation_success.HasValue)
                 {
