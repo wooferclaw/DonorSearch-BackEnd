@@ -1,9 +1,11 @@
-﻿using DonorSearchBackend.DAL.Repositories;
+﻿using DonorSearchBackend.DAL;
+using DonorSearchBackend.DAL.Repositories;
 using DonorSearchBackend.Helpers;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace DonorSearchBackend.Controllers
 {
@@ -39,12 +41,13 @@ namespace DonorSearchBackend.Controllers
         /// <summary>
         /// Create or update user
         /// </summary>
-        /// <param name="userJson"></param>
+        /// <param name="userJson">changed user JSON</param>
+        /// <param name="type">init or change</param>
         /// <returns></returns>
-        // POST /api/users
+        // POST /api/users?type=<init/change>
         [EnableCors("AllowAll")]
         [HttpPost]
-        public string Post([FromBody] JObject userJson)
+        public async Task<string> Post([FromBody] JObject userJson, string type)
         {
             string result;
             //check right format for JSON - TODO validation failed
@@ -73,13 +76,13 @@ namespace DonorSearchBackend.Controllers
             {
                 return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "last_name");
             }
-            if (user.city_id==0)
+            if (string.IsNullOrEmpty(user.city_title))
             {
-                return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "city_id");
+                return ResultHelper.Error(ExceptionEnum.EmptyNonRequiredParameter, "city_title");
             }
             #endregion
-            UserRepository.AddOrUpdateUser(user);
-            result = ResultHelper.Success();
+            User resultUser =await UserRepository.AddOrUpdateUser(user, type == "init");
+            result = JsonConvert.SerializeObject(resultUser);
 
             //update in APi - not work
             //mutation updateProfile($first_name: String, $second_name: String, $last_name: String, $maiden_name: String, $bdate: Int, $gender: Int, $city_id: Int, $about_self:String, $blood_type_id:Int, $kell: Int, $blood_class_ids:[Int],$bone_marrow: Boolean, $cant_to_be_donor: Boolean, $donor_pause_to: Int ) 

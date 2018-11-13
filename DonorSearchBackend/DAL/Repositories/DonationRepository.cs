@@ -56,7 +56,7 @@ namespace DonorSearchBackend.DAL.Repositories
             }
         }
 
-        public static void UpdateDonation(Donation donation)
+        public static async void UpdateDonation(Donation donation)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -80,7 +80,7 @@ namespace DonorSearchBackend.DAL.Repositories
                    User user = UserRepository.GetUserByVkId(donation.vk_id);
                     //TODO: 60 дней только для цельной крови
                     user.donor_pause_to = donation.donation_date.Value.AddDays(60);
-                    UserRepository.AddOrUpdateUser(user);
+                    await UserRepository.AddOrUpdateUser(user,false);
                 }
                 //Когда пользователь посетит центр и сделает донацию или сдаст кровь из пальца (повторно)
                 if (donation.confirm_visit != null && donation.confirm_visit.success != null && donation.confirm_visit.without_donation != null)

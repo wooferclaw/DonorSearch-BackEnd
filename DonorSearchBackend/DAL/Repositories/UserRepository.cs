@@ -19,7 +19,7 @@ namespace DonorSearchBackend.DAL.Repositories
         }
 
         //TODO: error?
-        public static async void AddOrUpdateUser(User user)
+        public static async Task<User> AddOrUpdateUser(User user, bool isInit)
         {
             
             using (ApplicationContext db = new ApplicationContext())
@@ -57,13 +57,23 @@ namespace DonorSearchBackend.DAL.Repositories
                 if (db.Users.Any(u => u.vk_id == user.vk_id))
                 {
                     var originalUser = db.Users.FirstOrDefault(u => u.vk_id == user.vk_id);
-                    db.Entry(originalUser).CurrentValues.SetValues(user);
+                    if (!isInit)
+                    {
+                        
+                        db.Entry(originalUser).CurrentValues.SetValues(user);
+                    }
+                    else
+                    {
+                        user = originalUser;
+                    }
                 }
                 else
                 {
                     db.Users.Add(user);
                 }
                 db.SaveChanges();
+
+                return user;
             }
         }
     }
