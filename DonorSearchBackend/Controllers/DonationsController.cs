@@ -21,27 +21,30 @@ namespace DonorSearchBackend.Controllers
         /// <param name="type">successful or timeline</param>
         /// <returns>List of donations in JSON</returns>
         ///<remarks>
-        /// Example of donation JSON:{
-        ///  "id": 0,
-        ///  "ds_Id": null,
-        ///  "vk_id": 0,
-        ///  "appointment_date_from": "0001-01-01T00:00:00",
-        ///  "appointment_date_to": "0001-01-01T00:00:00",
-        ///  "donation_date": null,
-        ///  "donation_success": null,
-        ///  "blood_class_ids": 0,
-        ///  "img": null,
-        ///  "station_id": null,
-        ///  "recomendation_timestamp": null,
-        ///  "finished": false,
-        ///  "confirm_visit": {
-        ///  "id": 0,
-        ///  "date_from": null,
-        ///  "date_to": null,
-        ///  "visit_date": null,
-        ///  "success": null
+        /// Example of donation JSON:
+        /// {
+        ///     "id": 0,
+        ///     "ds_Id": null,
+        ///     "vk_id": 0,
+        ///     "appointment_date_from": "0001-01-01T00:00:00",
+        ///     "appointment_date_to": "0001-01-01T00:00:00",
+        ///     "donation_date": null,
+        ///     "donation_success": null,
+        ///     "blood_class_ids": 0,
+        ///     "img": null,
+        ///     "station_id": null,
+        ///     "recomendation_timestamp": null,
+        ///     "finished": false,
+        ///     "confirm_visit":
+        ///         {
+        ///         "id": 0,
+        ///         "date_from": null,
+        ///         "date_to": null,
+        ///         "visit_date": null,
+        ///         "success": null
+        ///         }
         ///}
-        ///}
+        /// 
         /// Blood_class_ids possible values:
         ///None = 0,
         ///WholeBlood = 1,
